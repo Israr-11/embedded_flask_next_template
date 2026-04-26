@@ -1,28 +1,17 @@
-from flask import Flask
-from configuration.config import Config
-from routes.user_routes import user_bp
-from models.user_model import db
+from fastapi import FastAPI
+from routes import user_routes, device_routes, device_log_routes
 
-def create_app(config_class=Config):
-    app = Flask(__name__)
-    app.config.from_object(config_class)
-    
-    # Initialize extensions
-    db.init_app(app)
-    
-    # Register blueprints
-    app.register_blueprint(user_bp)
-    
-    @app.route('/')
-    def home():
-        return {"message": "Flask + PostgreSQL is working!"}
-    
-    return app
+app = FastAPI(title="IOTConnect Clone", version="1.0.0")
 
-if __name__ == '__main__':
-    app = create_app()
-    # Uncomment to create tables on startup
-    # with app.app_context():
-    #     db.create_all()
-    
-    app.run(debug=True)
+# INCLUDNG ROUTES
+app.include_router(user_routes.router, prefix="/api/users", tags=["users"])
+app.include_router(device_routes.router, prefix="/api/devices", tags=["devices"])
+app.include_router(device_log_routes.router, prefix="/api/device-logs", tags=["device-logs"])
+
+@app.get("/")
+def read_root():
+    return {"message": "IOTConnect Clone API"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

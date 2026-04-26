@@ -1,42 +1,26 @@
-# Environment variables
-.env
-
-# Virtual environment
+index.html
+static/
 venv/
-env/
-ENV/
-
-# Python cache files
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Flask stuff
-instance/
-.webassets-cache
-
-# Project specific
-structure.txt
-
-# IDE specific files (optional)
+*.pyc
+.env
+.DS_Store
 .idea/
 .vscode/
+*.sqlite3
+*.log
+coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+migrations/
+instance/
+*.pyo
+*.pyd
 *.swp
 *.swo
+*.bak
+*.tmp
+*.old
