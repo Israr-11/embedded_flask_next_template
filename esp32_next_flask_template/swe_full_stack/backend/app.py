@@ -1,18 +1,28 @@
-from flask import Flask, request
-import paho.mqtt.client as mqtt
-from flask_cors import CORS
+from flask import Flask
+from configuration.config import Config
+from routes.user_routes import user_bp
+from models.user_model import db
 
-app = Flask(__name__)
-CORS(app) # Crucial for your React app
-
-mqtt_client = mqtt.Client()
-mqtt_client.connect("broker.hivemq.com", 1883, 60)
-
-@app.route('/toggle', methods=['POST'])
-def toggle_led():
-    state = request.json.get('state') # "ON" or "OFF"
-    mqtt_client.publish("riverwalk/led", state)
-    return {"status": "sent", "state": state}
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+    
+    # Initialize extensions
+    db.init_app(app)
+    
+    # Register blueprints
+    app.register_blueprint(user_bp)
+    
+    @app.route('/')
+    def home():
+        return {"message": "Flask + PostgreSQL is working!"}
+    
+    return app
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app = create_app()
+    # Uncomment to create tables on startup
+    # with app.app_context():
+    #     db.create_all()
+    
+    app.run(debug=True)
