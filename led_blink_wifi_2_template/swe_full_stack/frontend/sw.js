@@ -1,0 +1,1 @@
+// This file is created by next-pwa, you don't need to edit it
