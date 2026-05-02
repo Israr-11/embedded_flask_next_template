@@ -3,7 +3,7 @@
 
 const char* ssid = "Error";
 const char* password = "123456789";
-const char* mqtt_server = "broker.hivemq.com"; // Free public broker for testing
+const char* mqtt_server = "broker.hivemq.com";  // Free public broker for testing
 
 WiFiClient espClient;
 PubSubClient client(espClient);
